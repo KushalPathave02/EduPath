@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: isaii-quiz-app-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        fromSecret: true
+      - key: JWT_SECRET
+        fromSecret: true
+      - key: JUDGE0_API_KEY
+        fromSecret: true

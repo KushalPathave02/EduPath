@@ -1,0 +1,1 @@
+{"ast":null,"code":"export * from './CoreModule';","map":{"version":3,"names":[],"sources":["/Users/kushal/Downloads/isaii_Quiz_App-main/frontend/node_modules/expo-modules-core/src/web/index.web.ts"],"sourcesContent":["export * from './CoreModule';\n"],"mappings":"AAAA,cAAc,cAAc","ignoreList":[]},"metadata":{},"sourceType":"module","externalDependencies":[]}
