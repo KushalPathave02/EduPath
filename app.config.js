@@ -1,39 +1,31 @@
 export default {
   expo: {
-    name: 'EduPath',
-    slug: 'edupath',
-    version: '1.0.0',
-    orientation: 'portrait',
-    // icon: './assets/icon.png',
-    userInterfaceStyle: 'light',
-    /* splash: {
-      image: './assets/splash.png',
-      resizeMode: 'contain',
-      backgroundColor: '#ffffff'
-    }, */
-    updates: {
-      fallbackToCacheTimeout: 0
+    name: "ISAI Student Welfare",
+    slug: "isaii-student-welfare",
+    version: "1.0.0",
+
+    icon: "./assets/icon.png",
+
+    // 👇 Web + iOS splash (safe)
+    splash: {
+      image: "./assets/splash.png",
+      resizeMode: "contain",
+      backgroundColor: "#ffffff"
     },
-    assetBundlePatterns: [
-      '**/*'
-    ],
-    ios: {
-      supportsTablet: true,
-      bundleIdentifier: 'com.kushalpathave.edupath'
-    },
+
     android: {
-      /* adaptiveIcon: {
-        foregroundImage: './assets/adaptive-icon.png',
-        backgroundColor: '#FFFFFF'
-      }, */
-      package: 'com.kushalpathave.edupath'
-    },
-    web: {
-      // favicon: './assets/favicon.png'
-    },
-    extra: {
-      eas: {
-        projectId: '0cce52ea-37c4-4fd2-825b-818a0d817a2d'
+      package: "com.kushalpathave.isaiistudentwelfare",
+
+      // 🔥 THIS IS THE REAL FIX
+      splash: {
+        image: "./assets/splash.png",
+        resizeMode: "contain",
+        backgroundColor: "#ffffff"
+      },
+
+      adaptiveIcon: {
+        foregroundImage: "./assets/adaptive-icon.png",
+        backgroundColor: "#ffffff"
       }
     }
   }

@@ -1,30 +1,15 @@
 {
   "expo": {
-    "name": "isaii-student-welfare",
-    "slug": "isaii-student-welfare",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+    "extra": {
+      "eas": {
+        "projectId": "c67e71dd-54fb-4c90-8476-667972baede7"
       }
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "android": {
+      "package": "com.kushalpathave.isaiistudentwelfare"
+    },
+    "ios": {
+      "bundleIdentifier": "com.kushalpathave.isaiistudentwelfare"
     }
   }
 }

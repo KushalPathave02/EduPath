@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // NOTE: Replace with your actual backend IP address and port
 // IMPORTANT: Replace with your actual backend IP address and port
 // Find your local IP address by running `ifconfig | grep "inet " | grep -v 127.0.0.1` in your terminal
-const API_URL = 'http://10.240.213.130:5001/api';
+const API_URL = 'https://edupath-backend-e2vb.onrender.com/api';
 
 const apiService = axios.create({
   baseURL: API_URL,
