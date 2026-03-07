@@ -30,6 +30,7 @@
     "expo-speech": "^13.1.7",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
+    "groq-sdk": "^0.37.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",
     "morgan": "^1.10.0",

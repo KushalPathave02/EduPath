@@ -1,11 +1,30 @@
 import { Request, Response } from 'express';
 import fetch from 'node-fetch';
 
+import Groq from 'groq-sdk';
+
 const OLLAMA_API_URL = 'http://127.0.0.1:11434/api/chat';
 const OLLAMA_MODEL = 'gemma2:2b';
 
-const getOllamaResponse = async (prompt: string) => {
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY,
+});
+
+const getAIResponse = async (prompt: string) => {
   try {
+    // Try Groq first as it's more reliable than local Ollama
+    if (process.env.GROQ_API_KEY) {
+      console.log('--- Using Groq AI for Interview ---');
+      const completion = await groq.chat.completions.create({
+        messages: [{ role: 'user', content: prompt }],
+        model: 'llama-3.1-8b-instant',
+        response_format: { type: 'json_object' },
+      });
+      return JSON.parse(completion.choices[0].message.content || '{}');
+    }
+
+    // Fallback to Ollama if GROQ_API_KEY is not available
+    console.log('--- Falling back to Ollama for Interview ---');
     const response = await fetch(OLLAMA_API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -63,7 +82,7 @@ export const handleMockInterviewChat = async (req: Request, res: Response) => {
       prompt = `${systemPrompt}\n\nInterview History:\n${JSON.stringify(history, null, 2)}\n\nBased on the last answer, provide feedback and the next question.`;
     }
 
-    const aiResponse = await getOllamaResponse(prompt);
+    const aiResponse = await getAIResponse(prompt);
 
     if (isFinished) {
       console.log('--- AI Final Report Response ---', JSON.stringify(aiResponse, null, 2));
