@@ -59,11 +59,21 @@ export const registerUser = async (req: Request, res: Response) => {
 // @access  Public
 export const authUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
+  console.log('--- Login Attempt ---');
+  console.log('Email:', email);
 
   try {
     const user = await User.findOne({ email });
 
-    if (user && (await user.matchPassword(password))) {
+    if (!user) {
+      console.log('User not found in database');
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    const isMatch = await user.matchPassword(password);
+    console.log('Password Match:', isMatch);
+
+    if (user && isMatch) {
       res.json({
         _id: user._id,
         name: user.name,
@@ -75,7 +85,7 @@ export const authUser = async (req: Request, res: Response) => {
       res.status(401).json({ message: 'Invalid email or password' });
     }
   } catch (error) {
-    console.error(error);
+    console.error('Login Error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
