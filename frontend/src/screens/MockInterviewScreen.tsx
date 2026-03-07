@@ -1,5 +1,6 @@
 import React, { useState, useRef, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TextInput, ScrollView, ActivityIndicator, Alert } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import * as Speech from 'expo-speech';
 import { AuthContext } from '../context/AuthContext';
@@ -257,7 +258,17 @@ const MockInterviewScreen = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <Text style={styles.title}>AI Mock Interview</Text>
+        <View style={styles.header}>
+          <TouchableOpacity 
+            style={styles.backButton} 
+            onPress={() => navigation.goBack()}
+          >
+            <Ionicons name="arrow-back" size={24} color="#333" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>AI Mock Interview</Text>
+          <View style={{ width: 40 }} />
+        </View>
+
         {!interviewStarted && !finalReport && (
           <>
             <View style={styles.selectionContainer}>
@@ -306,6 +317,29 @@ const MockInterviewScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: '#f0f4f8' },
   container: { flex: 1, padding: 15 },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 15,
+  },
+  backButton: {
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: '#fff',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#333',
+    flex: 1,
+    textAlign: 'center',
+  },
   title: { fontSize: 26, fontWeight: 'bold', color: '#333', textAlign: 'center', marginVertical: 15 },
   button: { backgroundColor: '#5e4de2', padding: 15, borderRadius: 30, alignItems: 'center', marginVertical: 10 },
   buttonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
