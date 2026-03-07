@@ -20,6 +20,7 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 
   const { name, email, password } = req.body;
+  console.log('Register request body:', req.body);
 
   try {
     // Check if user exists
@@ -30,6 +31,7 @@ export const registerUser = async (req: Request, res: Response) => {
     }
 
     // Create user
+    console.log('Creating user with data:', { name, email, passwordLength: password.length });
     const user = await User.create({
       name,
       email,

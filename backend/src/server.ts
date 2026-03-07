@@ -53,6 +53,11 @@ app.use((req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 5001;
+console.log('--- Environment Check ---');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('MONGODB_URI:', process.env.MONGODB_URI ? 'Defined' : 'Undefined');
+console.log('GROQ_API_KEY:', process.env.GROQ_API_KEY ? 'Defined' : 'Undefined');
+console.log('-------------------------');
 app.listen(Number(PORT), '0.0.0.0', () => {
   console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
 });

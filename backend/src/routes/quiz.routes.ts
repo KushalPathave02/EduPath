@@ -54,19 +54,21 @@ router.post('/start', protect, async (req, res) => {
     const prompt = `
 Generate ${count} multiple choice questions about ${subject} (${level} level).
 
-Rules:
-- Respond with ONLY valid JSON ARRAY
-- No markdown
-- No extra text
-- Output format MUST be:
+Response MUST be a JSON array only.
 
+Format:
 [
   {
-    "question": "...",
-    "options": ["A","B","C","D"],
-    "correct": "A"
+    "question": "What is JavaScript?",
+    "options": ["Language", "Fruit", "Car", "City"],
+    "correct": "A",
+    "explanation": "JavaScript is a programming language."
   }
 ]
+
+Rules:
+1. "correct" MUST be "A", "B", "C", or "D".
+2. No markdown, no "json" tags, no preamble.
 `;
 
     console.log('--- Sending request to Groq API ---');
@@ -96,41 +98,18 @@ Rules:
     console.log('--- Received response from Groq API ---');
 
     try {
-      // Extract all JSON objects from text
-      const jsonObjects = text
-        .split('\n')
-        .map((line: string) => line.trim())
-        .filter((line: string) => line.startsWith('{') && line.endsWith('}'))
-        .map((line: string) => JSON.parse(line));
-
-      // If Groq returned multiple objects separately
-      let raw: any;
-
-      if (jsonObjects.length > 1) {
-        raw = jsonObjects;
-      } else {
-        // Handle single object or array response
-        const jsonText = text.substring(text.indexOf('['), text.lastIndexOf(']') + 1);
-        try {
-          raw = JSON.parse(jsonText);
-        } catch (e) {
-          // Fallback for single object if array parse fails
-          const singleJsonText = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
-          raw = JSON.parse(singleJsonText);
-        }
+      // Clean the response text to ensure it's valid JSON
+      let cleanedText = text.trim();
+      if (cleanedText.includes('```json')) {
+        cleanedText = cleanedText.split('```json')[1].split('```')[0].trim();
+      } else if (cleanedText.includes('```')) {
+        cleanedText = cleanedText.split('```')[1].split('```')[0].trim();
       }
 
-      // Convert ANY Groq format -> array
-      let questionsArray: any[] = [];
+      const questionsArray = JSON.parse(cleanedText);
 
-      if (Array.isArray(raw)) {
-        // case 1: Groq returned array
-        questionsArray = raw;
-      } else if (typeof raw === 'object' && raw !== null) {
-        // case 2: Groq returned object (question1, question2...)
-        questionsArray = Object.values(raw);
-      } else {
-        throw new Error("Invalid Groq response format");
+      if (!Array.isArray(questionsArray)) {
+        throw new Error("AI did not return an array of questions");
       }
 
       // Normalize to your schema
